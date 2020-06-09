@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1{
+            width: 400px;
+            height: 100px;
+            background-color: orange;
+
+        }
+        #div2{
+            width: 400px;
+            height: 500px;
+            background-color: peachpuff;
+        }
+        #input1{
+            width: 380px;
+            height: 30px;
+            font-size: 18px;
+        }
+        #div1 button{
+            width: 100px;
+            height: 30px;
+            font-size: 18px;
+            background-color: black;
+            color: white;
+            margin-left: 5px;
+        }
+        #div2 div{
+            border-bottom: 1px dash gray;
+            padding: 2px;
+            position: relative;
+        }
+        #div2 div button{
+            position: absolute;
+            right: 0;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var Div1 = document.getElementById("div1");
+            var Div2 = document.getElementById("div2");
+            var Input = document.getElementById('input1');
+
+            var Btns = Div1.getElementsByTagName('button');
+
+            Btns[0].onclick = function(){
+                if(!Input.value){
+                    alert("输入内容为空");
+                }else{
+                    var newDiv = document.createElement("div");
+                    var Txt = document.createTextNode(Input.value);
+                    newDiv.appendChild(Txt);
+                    Div2.appendChild(newDiv);
+                    Input.value = '';
+
+
+                }
+            }
+
+            Btns[1].onclick = function(){
+                Div2.removeChild(Div2.lastChild);
+            }
+
+            Btns[2].onclick = function(){
+                var newNode = Div2.lastChild.cloneNode(true);
+                Div2.appendChild(newNode);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="div1">
+       <input type="text" id='input1' placeholder="输入内容"><br>
+       <button>增加</button>
+       <button>删除</button>
+       <button>拷贝</button>
+    </div>
+    <div id="div2">
+        <!-- <div>xxx <button>x</button></div>
+        <div>xxx <button>x</button></div>
+        <div>xxx <button>x</button></div> -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a{
+            display: block;
+            font-size: 40px;
+            margin: 100px;
+            width: 130px;
+        }
+        #msg{
+            width: 60px;
+            height: 25px;
+            background-color: gray;
+            color: white;
+            display: none;
+            position: absolute;
+        }
+    </style>
+    <script>
+        //  clientX clientY 相对可视窗口左上角为原点的坐标
+        
+        //鼠标移入时显示的描述信息
+        var arr = ['A Tag','B Tag','C Tag','D Tag'];
+        window.onload = function(){
+            var As = document.getElementsByTagName('a');
+            var Msg = document.getElementById('msg');
+
+            for(var i = 0; i < As.length; i++){
+                As[i].index = i; 
+                As[i].onmouseover = function(){
+                    Msg.innerHTML = arr[this.index]
+                    Msg.style.display = 'block';
+
+                }
+
+                As[i].onmouseout = function(){
+                    Msg.style.display = 'none';
+                }
+
+                //添加鼠标移动事件
+                As[i].onmousemove = function(ev){
+                    //通过e拿到事件对象，window.event兼容IE8以下
+                    var e = ev || window.event;
+                    Msg.style.left = e.clientX +20 + 'px';
+                    Msg.style.top = e.clientY +20 + 'px';
+
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <a href="#">A Tag</a>
+    <a href="#">B Tag</a>
+    <a href="#">C Tag</a>
+    <a href="#">D Tag</a>
+    <div id="msg"></div>
+</body>
+</html>
