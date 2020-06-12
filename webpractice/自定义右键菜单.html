@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #menu{
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            display: none;
+            position: absolute;
+
+        }
+    </style>
+    
+    <script>
+        window.onload = function(){
+            // 禁用浏览器自带右键
+            document.oncontextmenu = function(){
+                return false;
+            }
+
+            //拿到右键菜单
+            var Menu = document.getElementById('menu');
+
+            document.onmousedown = function(ev){
+                var e = ev || window.event;
+                if(e.button == 2){
+                    Menu.style.display = 'block';
+                    Menu.style.left = e.clientX + 'px';
+                    Menu.style.top = e.clientY + 'px';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="menu">
+        <ul>
+            <li>菜单1</li>
+            <li>菜单2</li>
+            <li>菜单3</li>
+        </ul>
+    </div>
+</body>
+</html>

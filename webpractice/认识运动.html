@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+          margin: 0;
+          padding: 0;  
+        }
+        #div1{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top: 100px;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var Btn = document.getElementById('btn1');
+            var Div = document.getElementById('div1');
+            var speed = 5;
+            var timer = null;
+            Btn.onclick = function(){
+                clearInterval(timer); //防止点击多次会加速运动
+                timer = setInterval(function(){
+                    if(Div.offsetLeft >= 500){
+                        clearInterval(timer);
+                    }else{Div.style.left = Div.offsetLeft + speed +'px';
+                    }
+                },30)
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="btn1">开始运动</button>
+    <div id="div1"></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //事件监听器可以代替传统的事件绑定完成更复杂的任务
+        //addEventListener  removeEventListener
+        //其中参数false为冒泡 true为捕获
+        //以上两者IE不兼容
+        //IE兼容 attachEvent  detachEvent 需要改为onclick， 无false或true参数
+        window.onload = function(){
+            var Btn = document.getElementById('btn1');
+            Btn.addEventListener('click',function(){
+                alert('click1');
+            },false);
+            Btn.addEventListener('click',function(){
+                alert('click2');
+            },false);
+        }
+    </script>
+</head>
+<body>
+    <button id="btn1">按钮</button>
+</body>
+</html>

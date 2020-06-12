@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #t1 tr td{
+            width: 100px;
+            height: 30px;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var Row = document.getElementById('row');
+            var Col = document.getElementById('col');
+            var Btn = document.getElementById('btn1');
+            var T1 = document.getElementById('t1');
+
+            //给删除按钮添加事件委托
+            T1.onclick = function(ev){
+                var e = ev || window.event;
+                var target = e.target || window.event.secElement;
+                if(target.nodeName.toLowerCase() == 'button'){
+                    T1.removeChild(target.parentNode.parentNode);
+                }
+            }
+
+            Btn.onclick = function(){
+                if(!Row.value || !Col.value){
+                    alert('输入对应行列');
+                }else{
+                    for(var i=0; i<Row.value; i++){
+                        var Tr = document.createElement('tr');
+                        for(var j=0; j<Col.value; j++){
+                            var Td = document.createElement('td');
+                            Tr.appendChild(Td);
+                        }
+                        var Close = document.createElement('td');
+                        Close.innerHTML = '<button>删除</button>';
+                        Tr.appendChild(Close);
+                        T1.appendChild(Tr);
+                    }
+                    
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" placeholder="行" id='row'>
+    <input type="text" placeholder="列" id='col'>
+    <button id='btn1'>生成</button>
+    <table id='t1' border='1'></table>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //用return阻止
+        // window.onload = function(){
+        //     var A1 = document.getElementById('a1');
+        //     A1.onclick = function(){
+        //         return confirm('当前页面被攻击，你确定要前往该页面吗');
+        //     }
+        // }
+
+    //return阻止函数的后续执行，因此提供另外的方案
+        function preDef(e){
+            if(e.preventDefault){
+                e.preventDefault();
+            }else{
+                window.event.returnValue = false;
+            }
+        }
+
+        window.onload = function(){
+            var A1 = document.getElementById('a1');
+            
+            A1.onclick = function(ev){
+            var e = ev || window.event;
+            preDef(e);
+            alert('has been prevented')
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <a id='a1' href="http://www.baidu.com">一个被阻止的超链接</a>
+</body>
+</html>

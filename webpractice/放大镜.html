@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #small{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 100px;
+            top: 100px;
+        }
+        #small img{
+            width: 100%;
+            height: 100%;
+        }
+        #mark{
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+
+        }
+        #big{
+            width: 90px;
+            height: 90px;
+            border: 1px solid black;
+            left:250px;
+            top:80px;
+            position:absolute;
+            overflow: hidden;
+            display: none;
+        }
+        #big img{
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            left:0px;
+            top:0px;
+        }
+    </style>
+
+    <script>
+        window.onload =function(){
+            var Small = document.getElementById('small');
+            var Big = document.getElementById('big');
+            var Mark = document.getElementById('mark');
+            var BigImg = Big.getElementsByTagName('img')[0];
+
+            Small.onmouseover = function(){
+                Mark.style.display = 'block';
+                Big.style.display = 'block';
+            }
+            Small.onmouseout = function(){
+                Mark.style.display  = 'none';
+                Big.style.display = 'none';
+            }
+
+            Small.onmousemove = function(ev){
+                var e =ev || window.event;
+                var l = e.clientX - Small.offsetLeft -15
+                var t = e.clientY - Small.offsetTop -15
+                if(l<=0){
+                    l = 0;
+                }
+                if(l>=70){
+                    l = 70;
+                }
+                if(t<=0){
+                    t = 0;
+                }
+                if(t>=70){
+                    t = 70;
+                }
+
+                Mark.style.left = l + 'px';
+                Mark.style.top = t + 'px';
+
+                BigImg.style.left = l * -3 + 'px';
+                BigImg.style.top = t * -3 + 'px';
+            }
+        }
+    </script>
+</head>
+<body>
+     <div id="small">
+        <img src="./img/1.jpg" alt="">
+        <div id="mark"></div>
+     </div>
+     <div id="big">
+         <img src="./img/1.jpg" alt="">
+     </div>
+</body>
+</html>

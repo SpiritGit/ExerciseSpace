@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #ul1 li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            float: left;
+        }
+        #ul1 li img{
+            width: 100%;
+            height: 100%;
+        }
+        #div1{
+            width: 880px;
+            height: 220px;
+            border:1px solid black;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        #ul1{
+            position: absolute;
+            left: 0px;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var Ul = document.getElementById('ul1');
+            var Div = document.getElementById('div1');
+            Ul.innerHTML += Ul.innerHTML;
+            Ul.style.width = 220 * 8+'px';
+
+            setInterval(function(){
+                Ul.style.left = Ul.offsetLeft -2 + 'px';
+                if(Ul.offsetLeft<= -Ul.offsetWidth/2){
+                    Ul.style.left = '0';
+                }
+            },30)
+        }
+    </script>
+</head>
+<body>
+    <div id = 'div1'>
+        <ul id = 'ul1'>
+            <li><img src="./img/1.jpg" alt=""></li>
+            <li><img src="./img/2.jpg" alt=""></li>
+            <li><img src="./img/3.jpg" alt=""></li>
+            <li><img src="./img/4.jpg" alt=""></li>
+        </ul>
+    </div>
+</body>
+</html>

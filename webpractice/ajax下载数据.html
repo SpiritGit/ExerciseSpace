@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            var Btn = document.getElementById('btn1');
+            Btn.onclick = function(){
+                //XMLHttpRequest IE8以下不支持，用ActiveXObject("Microsoft.XMLHTTP");
+
+                //创建ajax对象
+                var xhr = null;
+                try{
+                    xhr = new XMLHttpRequest();
+                }catch(error){
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP"); 
+                }
+                // if(window.XMLHttpRequest){
+                //     xhr = new XMLHttpRequest();
+                // }else{
+                //     xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                // }
+                
+                //调用open方法
+                xhr.open('get','test.txt',true);//true为是否异步
+
+                //调用send方法发送请求
+                xhr.send();
+
+                //等待数据响应
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 4){
+                        if(xhr.status == 200){
+                            alert(xhr.responseText);
+                        }else{
+                            alert('Error:' + xhr.status);
+                        }
+                        
+                    }
+                }
+
+                //readyState属性:请求状态
+                // 0  初始化 还没有调用open（）方法
+                // 1  载入  已调用send（）方法 正在发送请求
+                // 2  载入完成  send（）方法完成， 收到全部响应内容
+                // 3  解析响应内容
+                // 4  解析完成  客户端可以调用
+
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="btn1">下载数据</button>
+</body>
+</html>

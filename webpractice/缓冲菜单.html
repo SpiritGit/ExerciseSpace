@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #div1{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            right: 0;
+
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var Div = document.getElementById('div1');
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            var H = parseInt(scrollTop + (windowHeight - Div.offsetHeight)/2);
+            startMove(H);
+
+            window.onscroll = function(){
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                var H = parseInt(scrollTop + (windowHeight - Div.offsetHeight)/2);
+                startMove(H); 
+            }
+
+            window.onresize = function(){
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                var H = parseInt(scrollTop + (windowHeight - Div.offsetHeight)/2);
+                startMove(H); 
+            }
+
+          }
+
+
+          var timer = null;
+          function startMove(target){
+            var Div = document.getElementById('div1');
+            clearInterval(timer);
+            timer = setInterval(function(){
+                var speed = (target - Div.offsetTop)/8;
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                if(Div.offsetTop == target){
+                    clearInterval(timer);
+                }else{
+                    Div.style.top = Div.offsetTop + speed + 'px';
+                }
+
+                document.title = Div.offsetTop + ' ' + target;
+            },30)
+          }
+    </script>
+</head>
+<body style = 'height: 3000px;'>
+    <div id="div1"></div>
+</body>
+</html>

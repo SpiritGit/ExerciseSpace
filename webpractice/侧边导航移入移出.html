@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1{
+            width: 100px;
+            height: 200px;
+            background-color: gray;
+            position: absolute;
+            left: -100px;
+            top: 400px;
+        }
+        #div1 span{
+            width: 20px;
+            height: 60px;
+            background-color: orange;
+            position: absolute;
+            left: 100px;
+            top: 70px;
+            line-height: 20px;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var Div = document.getElementById('div1');
+            Div.onmouseover = function(){
+                startMove(0);
+            }
+            Div.onmouseout = function(){
+                startMove(-100);
+            }
+
+            //封装运动函数
+            
+            var timer = null;
+            function startMove(target){
+                var Div = document.getElementById('div1');
+                var speed = (target - Div.offsetLeft)/8;
+                speed = Div.offsetLeft < target ? Math.floor(Math.abs(speed))-2 : -Math.floor(Math.abs(speed))+2;
+                clearInterval(timer);
+                timer = setInterval(function(){
+                    if(Div.offsetLeft == target){
+                        clearInterval(timer);
+                    }else{
+                        Div.style.left = Div.offsetLeft + speed + 'px';
+                    }
+                }, 30);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="div1">
+        <span>分享到</span>
+    </div>
+</body>
+</html>

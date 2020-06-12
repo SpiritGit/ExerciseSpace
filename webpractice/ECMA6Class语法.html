@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        //原构造函数
+        function Person1(name,sex,age){
+            this.name = name;
+            this.sex = sex;
+            this.age = age;
+        }
+        Person1.prototype.showSelf = function(){
+            alert(`My name is ${this.name}, I am ${this.age} years old, I am a ${this.sex}`);
+        }
+        a = new Person1('xiaoming','boy',18);
+        a.showSelf();
+
+
+        //class 语法
+        class Person2{
+            constructor(name, sex, age){
+                this.name = name;
+                this.sex = sex;
+                this.age = age;
+            }
+            showSelf(){
+                alert(`My name is ${this.name}, I am ${this.age} years old, I am a ${this.sex}`);
+            }
+        }
+        b = new Person2('xiaohong','girl',18);
+        b.showSelf();
+    </script>
+
+</head>
+<body>
+    
+</body>
+</html>

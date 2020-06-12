@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1{
+            width: 600px;
+            height: 600px;
+            border: 1px black solid;
+            position: relative;
+            margin: 100px auto;
+        }
+        #ball{
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 30px;
+            left: 290px;
+        }
+        #bat{
+            width: 100px;
+            height: 30px;
+            background-color: blue;
+            position: absolute;
+            bottom: 0;
+            left: 250px;
+        }
+        #brick div{
+            width: 98px;
+            height: 18px;
+            border: 1px solid black; 
+            float: left;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var Div = document.getElementById('div1');
+            var Ball = document.getElementById('ball');
+            var Bat = document.getElementById('bat');
+            var Brick = document.getElementById('brick');
+            var Bricks = Brick.getElementsByTagName('div');
+            dragX(Bat);//移动滑块
+            createBrick(60);//创建砖块
+            // alert(Ball.style.left)
+            // alert(Ball.offsetLeft)
+            var speedX = Math.random()*3 + 4;
+            var speedY = -(Math.random()*3 + 4); 
+            setInterval(function(){
+                Ball.style.left = Ball.offsetLeft + speedX + 'px';
+                Ball.style.top = Ball.offsetTop + speedY + 'px';
+                if(Ball.offsetLeft >= 580 || Ball.offsetLeft <=0){
+                    speedX *= -1;
+                }
+
+                if(Ball.offsetTop <=0){
+                    speedY *= -1;
+                }
+
+                if(Ball.offsetTop >= 580){
+                    alert('GAME OVER')
+                    window.location.reload() 
+                }
+
+                //小球和滑块的碰撞检测
+                if(knock(Ball,Bat)){
+                    speedY *= -1;
+                }
+                //小球和砖块碰撞
+                for(var i = 0; i < Bricks.length; i ++){
+                    if(knock(Bricks[i], Ball)){
+                        speedY *= -1;
+                        //砖块销毁
+                        Brick.removeChild(Bricks[i]);
+                        break;
+                    }
+                }               
+            },10)
+
+        }
+
+
+        //封装拖拽滑块
+        function dragX(node){
+            node.onmousedown = function(ev){
+                var e = ev || window.event;
+                var offsetX = e.clientX - node.offsetLeft;
+                
+                document.onmousemove = function(ev){
+                    var e = ev || window.event;
+                    var l =e.clientX - offsetX;
+                    if(l<=0){
+                        l = 0;
+                    }
+                    if(l>=500){
+                        l = 500;
+                    }
+                    node.style.left = l + 'px';
+                }
+            }
+
+            document.onmouseup = function(){
+                document.onmousemove = null;
+            }
+        }
+
+        //随机颜色
+        function randomColor(){
+            var str = "rgb(" + parseInt(Math.random()*256) + "," + parseInt(Math.random()*256) + "," + parseInt(Math.random()*256) + ")";
+            return str;
+        }
+        //创建砖块
+        function createBrick(n){
+            var Brick = document.getElementById('brick');
+            for(var i = 0; i < n; i++){
+                var node = document.createElement('div');
+                node.style.backgroundColor = randomColor();
+                Brick.appendChild(node);
+            }
+
+            //文档流转换，相对定位变绝对定位
+            var Bricks = Brick.getElementsByTagName('div');
+            for(var i=0; i<Bricks.length; i++){
+                Bricks[i].style.left = Bricks[i].offsetLeft + 'px';
+                Bricks[i].style.top = Bricks[i].offsetTop + 'px';
+            }
+            for(var i=0; i<Bricks.length; i++){
+                Bricks[i].style.position = 'absolute';
+            }
+        }
+
+        //碰撞检测封装
+        function knock(node1,node2){
+            var l1 = node1.offsetLeft;
+            var r1 = node1.offsetLeft + node1.offsetWidth;
+            var t1 = node1.offsetTop;
+            var b1 = node1.offsetTop + node1.offsetHeight;
+
+            var l2 = node2.offsetLeft;
+            var r2 = node2.offsetLeft + node2.offsetWidth;
+            var t2 = node2.offsetTop;
+            var b2 = node2.offsetTop + node2.offsetHeight;
+
+            if(l2 > r1 || r2 < l1 || t2 > b1 || b2 < t1){
+                return false;
+            }else{
+                return true;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="div1">
+        <div id="ball"></div>
+        <div id="bat"></div>
+        <div id="brick"></div>
+    </div>
+</body>
+</html>

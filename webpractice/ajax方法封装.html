@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //{}为ECMA6解构
+        function $ajax({method = 'get', url, data, success, error}){
+            var xhr = null;
+            try{
+                xhr = new XMLHttpRequest();
+            }catch(error){
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            if(data){
+                data = queryString(date);
+            }
+
+            if(method == 'get' && data){
+                url += "?" + data;
+            }
+            xhr.open(method, url, true);
+
+            if(method == "get"){
+                xhr.send();
+            }else{
+                xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+                xhr.send(data);
+            }
+
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4){
+                    if(xhr.status == 200){
+                        //回调函数
+                        if(success){
+                            success(xhr.responseText);
+                        }
+                    }else{
+                        if(error){
+                            error("Error:" + xhr.status);
+                        }
+                    }
+                }
+            }
+        }
+
+        function queryString(obj){
+            var str = "";
+            for(var attr in obj){
+                attr + "=" + obj[attr] + "&";
+            }
+            //去掉最后一个&符号
+            return str.substring(0,str.length -1);
+        }
+
+
+        window.onload = function(){
+            var GetBtn = document.getElementById('getBtn');
+            var PostBtn = document.getElementById('postBtn');
+
+            GetBtn.onclick = function(){
+                $ajax({
+                    url: '',
+                    data: {
+                        username: 'xxx',
+                        age: 18,
+                        password: '123abc'
+                    }
+                    success:function(result){
+                        alert(result);
+                    }
+
+                    error:function(msg){
+                        alert(msg);
+                    }
+                })
+            }
+
+            PostBtn.onclick = function(){
+                $ajax({
+                    method: 'post',
+                    url: '',
+                    data: {
+                        username: 'xxx',
+                        age: 18,
+                        password: '123abc'
+                    }
+                    success:function(result){
+                        alert(result);
+                    }
+
+                    error:function(msg){
+                        alert(msg);
+                    }
+
+                })                
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="getBtn">GET请求</button>
+    <button id="postBtn">POST请求</button>
+</body>
+</html>
